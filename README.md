@@ -4,6 +4,10 @@ Origin is a fictional lending workspace with a connected borrower portal and rev
 
 Vue and TypeScript power the interface. Express and PostgreSQL persist private demo workspaces. LangGraph runs the document-review workflow with PostgreSQL checkpoints. OpenAI extracts proposed facts and source quotes. It has no loan-decision tool.
 
+[Live workspace](https://origin-production-9ae1.up.railway.app/) · [Browser sample](https://scott-garvin.github.io/loan-origination/)
+
+The live workspace needs an Origin demo access key for persistent data and AI. Ask for a key; use fictional documents only.
+
 ## Try the workflow
 
 1. Open Alex Morgan in **Document review**, then choose **AI review**.
