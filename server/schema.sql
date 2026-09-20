@@ -1,0 +1,17 @@
+create table if not exists origin_sessions(id text primary key,data jsonb not null,expires_at timestamptz not null default now()+interval '1 day');
+alter table origin_sessions enable row level security;
+alter table origin_sessions force row level security;
+drop policy if exists origin_scope on origin_sessions;
+create policy origin_scope on origin_sessions using(id=current_setting('origin.session',true)) with check(id=current_setting('origin.session',true));
+create table if not exists origin_intakes(id uuid primary key,owner text not null references origin_sessions(id) on delete cascade,application_id text not null,generation text not null,revision integer not null,documents jsonb not null,completed boolean not null default false,created_at timestamptz not null default now());
+alter table origin_intakes enable row level security;
+alter table origin_intakes force row level security;
+drop policy if exists origin_intake_scope on origin_intakes;
+create policy origin_intake_scope on origin_intakes using(owner=current_setting('origin.session',true)) with check(owner=current_setting('origin.session',true));
+create table if not exists origin_invites(token_hash text primary key,owner text not null references origin_sessions(id) on delete cascade,application_id text not null,expires_at timestamptz not null default now()+interval '10 minutes');
+create table if not exists origin_borrowers(token_hash text primary key,owner text not null references origin_sessions(id) on delete cascade,application_id text not null,expires_at timestamptz not null default now()+interval '30 minutes');
+alter table origin_invites enable row level security;
+alter table origin_borrowers enable row level security;
+create table if not exists origin_usage(day date primary key,attempts integer not null check(attempts>=0));
+alter table origin_usage enable row level security;
+create index if not exists origin_intakes_owner on origin_intakes(owner);
