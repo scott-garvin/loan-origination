@@ -96,6 +96,8 @@ GitHub Pages builds the browser sample with `VITE_BASE_PATH=/loan-origination/`.
 
 For shared Supabase hosting, provision separate `origin_app` and `origin_graph` schemas and a restricted runtime login. Set `DATABASE_SCHEMA=origin_app`, `GRAPH_SCHEMA=origin_graph`, and `MIGRATE_ON_START=false`. Apply `scripts/migrate.ts` under an appropriate migration identity before release. The included Supabase root certificate is public; a hosted database URL should use `sslmode=verify-full&sslrootcert=server/certs/supabase-ca.crt`. Keep all secrets in runtime variables and ignored local files.
 
+Railway tracks the `main` branch through the Railway GitHub App. Its installation must include `scott-garvin/loan-origination` for push-triggered deployments. Runtime secrets stay in Railway variables. After a release, verify the deployment commit and `/api/health`; database migrations remain an explicit release step.
+
 ## Code map
 
 | File | Responsibility |
