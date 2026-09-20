@@ -31,7 +31,7 @@ jobs:
           VITE_BASE_PATH: /loan-origination/
           VITE_LIVE_DEMO_URL: https://origin-production-9ae1.up.railway.app/
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
